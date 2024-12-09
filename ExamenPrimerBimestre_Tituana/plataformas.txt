@@ -1,0 +1,2 @@
+PLATAFORMA|1|Netflix|11000|7.99|true
+PELICULA|1|Era del Hielo 1|Animación|0.0|01/11/2009|true
