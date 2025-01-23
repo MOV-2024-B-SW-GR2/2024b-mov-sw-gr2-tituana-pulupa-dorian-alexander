@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "875629641413",
+    "project_id": "prueba-9f913",
+    "storage_bucket": "prueba-9f913.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:875629641413:android:ebf2ee9e3506f2dc29baac",
+        "android_client_info": {
+          "package_name": "com.example.prueba_tituana"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrz6oZhArRyqwgimOqV6wxr3acO0A94iY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
