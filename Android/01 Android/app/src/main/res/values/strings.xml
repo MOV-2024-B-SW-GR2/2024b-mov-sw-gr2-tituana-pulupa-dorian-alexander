@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Android</string>
+    <string-array name="string_array_opciones_dialogo">
+        <item>Lunes</item>
+        <item>Martes</item>
+        <item>Miercoles</item>
+    </string-array>
+</resources>
