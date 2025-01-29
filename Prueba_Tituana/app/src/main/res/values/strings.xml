@@ -1,8 +1,4 @@
 <resources>
     <string name="app_name">Prueba_Tituana</string>
-    <string-array name="string_array_opciones_dialogo">
-        <item>Lunes</item>
-        <item>Martes</item>
-        <item>Miercoles</item>
-    </string-array>
+    <string name="titulo1">Emplo de titulo</string>
 </resources>

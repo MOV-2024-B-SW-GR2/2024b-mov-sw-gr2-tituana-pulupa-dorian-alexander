@@ -1,5 +1,6 @@
 package com.example.android
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -30,14 +31,15 @@ class MainActivity : AppCompatActivity() {
         ActivityResultContracts.StartActivityForResult()
     ){
             result ->
-        if (result.resultCode == Activity.RESULT_OK){
-            if (result.data != null){
-                val data = result.data
-                mostrarSnackbar("${data?.getStringExtra("nombreModificado")}")
+        if(result.resultCode == Activity.RESULT_OK){
+            if(result.data != null){
+                val data = result.data?.getStringExtra("nombreModificado")
+                mostrarSnackbar("$data")
             }
         }
     }
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -47,6 +49,8 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        EBaseDeDatos.tablaEntrenador = ESqliteHelperEntrenador(this)
         val botonCicloVida = findViewById<Button>(R.id.btn_ciclo_vida)
         botonCicloVida
             .setOnClickListener{
@@ -69,42 +73,52 @@ class MainActivity : AppCompatActivity() {
                 callbackContenidoIntentImplicito.launch(intentConRespuesta)
             }
 
-        val botonExplicito= findViewById<Button>(R.id.btn_ir_intent_implicito)
+        val botonExplicito = findViewById<Button>(R.id.btn_ir_intent_explicito)
         botonExplicito
-            .setOnClickListener{
+            .setOnClickListener {
                 val intentExplicito = Intent(
                     this, CIntentExplicitoParametros::class.java
                 )
-                intentExplicito.putExtra("nombre", "Dorian")
-                intentExplicito.putExtra("apellido", "Tituana")
-                intentExplicito.putExtra("edad", "22")
+                intentExplicito.putExtra("nombre", "Adrian")
+                intentExplicito.putExtra("apellido", "Eguez")
+                intentExplicito.putExtra("edad", 34)
+                intentExplicito.putExtra("entrenador",
+                    BEntrenador(1,"Adrian","Ejemplo")
+                )
                 callbackContenidoIntentExplicito.launch(intentExplicito)
+            }
+
+        val botonSqlite = findViewById<Button>(R.id.btn_sqlite)
+        botonSqlite
+            .setOnClickListener{
+                irActividad(ECrudEntrenador::class.java)
             }
     }
 
-    val callbackContenidoIntentImplicito = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ){
-            result ->
-        if (result.resultCode == Activity.RESULT_OK){
-            if (result.data != null){
-                val data = result.data
-                if (result.data!!.data != null){
-                    var uri: Uri = result.data!!.data!!
-                    val cursor = contentResolver.query(
-                        uri, null, null, null, null, null
-                    )
-                    cursor?.moveToFirst()
-                    val indiceTelefono = cursor?.getColumnIndex(
-                        ContactsContract.CommonDataKinds.Phone.NUMBER
-                    )
-                    val telefono = cursor?.getString(indiceTelefono!!)
-                    cursor?.close()
-                    mostrarSnackbar("Telefono $telefono")
+    val callbackContenidoIntentImplicito =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ){
+                result ->
+            if(result.resultCode == Activity.RESULT_OK){
+                if(result.data != null){
+                    // validacion de contacto
+                    if(result.data!!.data != null){
+                        val uri: Uri = result.data!!.data!!
+                        val cursor = contentResolver.query(
+                            uri, null, null, null, null, null
+                        )
+                        cursor?.moveToFirst()
+                        val indiceTelefono = cursor?.getColumnIndex(
+                            ContactsContract.CommonDataKinds.Phone.NUMBER
+                        )
+                        val telefono = cursor?.getString(indiceTelefono!!)
+                        cursor?.close()
+                        mostrarSnackbar("Telefono $telefono")
+                    }
                 }
             }
         }
-    }
 
     fun irActividad(clase: Class<*>)
     {

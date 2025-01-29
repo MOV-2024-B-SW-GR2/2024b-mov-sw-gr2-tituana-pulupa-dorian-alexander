@@ -28,11 +28,16 @@ class PlataformaStreamingActivity : AppCompatActivity() {
             android.R.layout.simple_list_item_1,
             arregloMPlataformaStreaming
         )
+
         listView.adapter = adaptador
         adaptador.notifyDataSetChanged()
 
         val botonAnadirListView = findViewById<Button>(R.id.btn_anadir_list_view)
-        botonAnadirListView.setOnClickListener { abrirDialogoCrearPlataforma(adaptador) }
+        botonAnadirListView.setOnClickListener {
+            val intentExplicito = Intent(this, crear_plataformaStreaming::class.java)
+            intentExplicito.putExtra("operacion", "Añadir plataforma de Streaming")
+            startActivity(intentExplicito)
+        }
         registerForContextMenu(listView)
     }
 
@@ -50,7 +55,9 @@ class PlataformaStreamingActivity : AppCompatActivity() {
     override fun onContextItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.mi_editar -> {
-                abrirDialogoEditar()
+                val intentExplicito = Intent(this, crear_plataformaStreaming::class.java)
+                intentExplicito.putExtra("operacion", "Editar plataforma de Streaming")
+                startActivity(intentExplicito)
                 true
             }
             R.id.mi_eliminar -> {
@@ -71,28 +78,6 @@ class PlataformaStreamingActivity : AppCompatActivity() {
             texto,
             Snackbar.LENGTH_SHORT
         ).show()
-    }
-
-    private fun abrirDialogoEditar() {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Editar nombre")
-
-        val input = EditText(this)
-        input.hint = "Ingrese el nuevo nombre"
-        input.inputType = InputType.TYPE_CLASS_TEXT
-        builder.setView(input)
-
-        builder.setPositiveButton("Aceptar") { _, _ ->
-            val nuevoNombre = input.text.toString()
-            if (nuevoNombre.isNotBlank()) {
-                editarNombrePlataforma(posicionItemSeleccionado, nuevoNombre)
-            } else {
-                mostrarSnackbar("Debe ingresar un nombre válido")
-            }
-        }
-
-        builder.setNegativeButton("Cancelar", null)
-        builder.create().show()
     }
 
     private fun abrirDialogoEliminar() {

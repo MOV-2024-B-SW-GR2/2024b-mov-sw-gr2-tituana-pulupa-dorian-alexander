@@ -1,7 +1,9 @@
 package com.example.android
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContract
@@ -21,6 +23,19 @@ class CIntentExplicitoParametros : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+        val nombre = intent.getStringExtra("nombre")
+        val apellido = intent.getStringExtra("apellido")
+        val edad = intent.getIntExtra("edad", 0)
+        val entrenador = intent.getParcelableExtra<BEntrenador>("entrenador")
+        val boton = findViewById<Button>(R.id.btn_devolver_respuesta)
+        boton.setOnClickListener {
+            val intentDevolverRespuesta = Intent()
+            intentDevolverRespuesta.putExtra(
+                "nombreModificado", "$nombre, $edad, $apellido ${entrenador.toString()}"
+            )
+            setResult(RESULT_OK, intentDevolverRespuesta)
+            finish()
         }
     }
 }
