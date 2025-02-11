@@ -1,16 +1,14 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.google.firebase.appdistribution)
-    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
-    namespace = "com.example.examenbimestreii"
+    namespace = "com.example.myapplication"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.examenbimestreii"
+        applicationId = "com.example.myapplication"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
@@ -36,8 +34,6 @@ android {
         jvmTarget = "11"
     }
 }
-
-
 
 dependencies {
 

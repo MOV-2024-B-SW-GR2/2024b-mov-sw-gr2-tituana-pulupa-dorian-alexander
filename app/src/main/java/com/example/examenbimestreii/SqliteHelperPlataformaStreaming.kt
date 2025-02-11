@@ -128,4 +128,33 @@ class SqliteHelperPlataformaStreaming(
         baseDatosEscritura.close()
         return resultadoEliminar != -1
     }
+
+    fun actualizarPlataformaStreaming(id: Int, nombre: String, descripcion: String, suscriptores: Int, precioMensual: Double, disponibleEnLatam: Boolean): Boolean {
+        val baseDatosEscritura = writableDatabase
+        val valoresAActualizar = ContentValues()
+        valoresAActualizar.put("nombre", nombre)
+        valoresAActualizar.put("suscriptores", suscriptores)
+        valoresAActualizar.put("precioMensual", precioMensual)
+        valoresAActualizar.put("disponibleEnLatam", disponibleEnLatam)
+        val parametrosConsultaActualizar = arrayOf(id.toString())
+        val resultadoActualizar = baseDatosEscritura.update("PlataformaStreaming", valoresAActualizar, "id=?", parametrosConsultaActualizar)
+        baseDatosEscritura.close()
+        return resultadoActualizar != -1
+    }
+
+    fun actualizarPelicula(id: Int, titulo: String, genero: String, duracion: Double, fechaEstreno: String, esPopular: Boolean, idPlataforma: Int): Boolean {
+        val baseDatosEscritura = writableDatabase
+        val valoresAActualizar = ContentValues()
+        valoresAActualizar.put("titulo", titulo)
+        valoresAActualizar.put("genero", genero)
+        valoresAActualizar.put("duracion", duracion)
+        valoresAActualizar.put("fechaEstreno", fechaEstreno)
+        valoresAActualizar.put("esPopular", esPopular)
+        valoresAActualizar.put("id_plataforma", idPlataforma)
+        val parametrosConsultaActualizar = arrayOf(id.toString())
+        val resultadoActualizar = baseDatosEscritura.update("Pelicula", valoresAActualizar, "id=?", parametrosConsultaActualizar)
+        baseDatosEscritura.close()
+        return resultadoActualizar != -1
+    }
+
 }
