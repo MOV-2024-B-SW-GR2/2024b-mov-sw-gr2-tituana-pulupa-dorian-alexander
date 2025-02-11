@@ -9,7 +9,10 @@ class MTarea(
 ) {
 
     override fun toString(): String {
-        val estadoTexto = if (estado) "Hecho" else "Pendiente"
+        // Usamos el check (✔) para tareas realizadas y la X (❌) para tareas pendientes
+        val estadoIcono = if (estado) "✔" else "❌"
+        val estadoTexto = if (estado) "Realizada" else "Pendiente"
+
         return """
         📝 Tarea Detalles:
         ----------------------
@@ -17,7 +20,7 @@ class MTarea(
         🖊 Descripción:       '$descripcion'
         📚 Materia:          '$materia'
         📅 Fecha de Entrega: '$fecha_entrega'
-        ✅ Estado:           $estadoTexto
+        $estadoIcono Estado: $estadoTexto
     """.trimIndent()
     }
 
